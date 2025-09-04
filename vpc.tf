@@ -45,8 +45,8 @@ resource "aws_key_pair" "tf_key" {
   public_key = file("~/.ssh/id_ed25519.pub")
 }
 
-resource "aws_security_group" "tf_ssh" {
-  name        = "tf_ssh"
+resource "aws_security_group" "tf_public" {
+  name        = "tf_public"
   description = "Allow SSH inbound traffic"
   vpc_id      = aws_vpc.tf_vpc.id
 
@@ -55,6 +55,18 @@ resource "aws_security_group" "tf_ssh" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port       = 3128
+    to_port         = 3128
+    protocol        = "tcp"
+    security_groups = [aws_security_group.tf_private.id]
+  }
+  ingress {
+    from_port       = 8080
+    to_port         = 8080
+    protocol        = "tcp"
+    security_groups = [aws_security_group.tf_private.id]
   }
 
   egress {
