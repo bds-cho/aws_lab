@@ -57,36 +57,16 @@ resource "aws_security_group" "tf_public" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port       = 3128
-    to_port         = 3128
+    from_port       = 80
+    to_port         = 80
     protocol        = "tcp"
-    security_groups = [aws_security_group.tf_private.id]
-  }
-  ingress {
-    from_port       = 8080
-    to_port         = 8080
-    protocol        = "tcp"
-    security_groups = [aws_security_group.tf_private.id]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
-
-resource "aws_security_group" "tf_private" {
-  name        = "tf_private"
-  description = "No inbound from internet"
-  vpc_id      = aws_vpc.tf_vpc.id
-
   ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = [aws_vpc.tf_vpc.cidr_block]
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
