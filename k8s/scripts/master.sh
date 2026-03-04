@@ -26,10 +26,10 @@ chown $(id -u):$(id -g) /root/.kube/config
 
 # Install Calico CNI
 for i in {1..30}; do
-  kubectl version --short && break
+  sudo kubectl version && break
   echo "Waiting for API server..."
   sleep 5
 done
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.4/manifests/tigera-operator.yaml
+sudo kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.4/manifests/tigera-operator.yaml --validate=false
 sleep 30
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.4/manifests/custom-resources.yaml
+sudo kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.4/manifests/custom-resources.yaml --validate=false

@@ -57,7 +57,7 @@ variable "ami_id" {
 variable "worker_count" {
   description = "Number of worker nodes"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 # Security variables
